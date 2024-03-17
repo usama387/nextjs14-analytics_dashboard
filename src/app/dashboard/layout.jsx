@@ -1,16 +1,16 @@
-import Navbar from "@/components/Dashboard/Navbar";
-import Sidebar from "@/components/Dashboard/Sidebar";
 import React from "react";
-
+import Navbar from "@/components/Dashboard/Navbar/Navbar";
+import Sidebar from "@/components/Dashboard/Sidebar/Sidebar";
+import styles from "./dashboard.module.css";
 
 // #1 This a layout page for dashboard which has different routes and therefore side and navbar will be visible on every page in all routes of dashboard
 const DashboardLayout = ({ children }) => {
   return (
-    <div>
-      <div>
+    <div className={styles.container}>
+      <div className={styles.menu}>
         <Sidebar />
       </div>
-      <div>
+      <div className={styles.content}>
         <Navbar />
         {children}
       </div>
