@@ -1,0 +1,26 @@
+/* color variables and default css for the app */
+:root {
+    --bg: #0E1320;
+    --bgSoft: #121C2B;
+    --text: white;
+    --textSoft: #b7bac1;
+}
+
+/* removing default padding and margin */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* main body of the app */
+body {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+/* links will inherit color from their parent */
+a {
+    color: inherit;
+    text-decoration: none;
+}
