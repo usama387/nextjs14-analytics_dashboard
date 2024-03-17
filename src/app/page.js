@@ -1,7 +1,13 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import { fetchUsers } from "@/lib/data";
 
-export default function Home() {
+const HomePage = async () => {
+  const users = await fetchUsers();
+
+  console.log(users);
+
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -93,3 +99,5 @@ export default function Home() {
     </main>
   );
 }
+
+export default HomePage;
