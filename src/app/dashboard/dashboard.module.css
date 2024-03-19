@@ -1,3 +1,4 @@
+/* Css being used in dashboard layout page */
 .container {
     display: flex;
 }
@@ -11,4 +12,28 @@
 .content {
     flex: 4;
     padding: 20px;
+}
+
+/* now css for the dashboard root page */
+.wrapper {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.main {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.side {
+    flex: 1;
 }
