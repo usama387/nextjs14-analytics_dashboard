@@ -1,23 +1,3 @@
-/* color variables and default css for the app */
-:root {
-  --bg: #151c2c;
-  --bgSoft: #182237;
-  --text: white;
-  --textSoft: #b7bac1;
-}
-
-/* removing default padding and margin */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* main body of the app */
-body {
-  background-color: var(--bg);
-  color: var(--text);
-}
 
 
 
