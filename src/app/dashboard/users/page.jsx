@@ -38,16 +38,16 @@ const UsersPage = () => {
                   height={40}
                   className={styles.userAvatar}
                 />
-                Mr Ahad Abro
+                Usama Razaaq
               </div>
             </td>
-            <td>ahad@gmail.com</td>
+            <td>usamarazaaq3@gmail.com</td>
             <td>19-03-2024</td>
             <td>user</td>
             <td>active</td>
             <td>
               <div className={styles.buttons}>
-                <Link href={"/"}>
+                <Link href={"/dashboard/users/test"}>
                   <button className={`${styles.button} ${styles.view}`}>
                     View
                   </button>
