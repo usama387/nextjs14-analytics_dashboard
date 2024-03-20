@@ -42,9 +42,9 @@ const ProductsPage = () => {
               </div>
             </td>
             <td>Desc</td>
-            <td>40,0000 pkr</td>
+            <td>40,000</td>
             <td>19-03-2024</td>
-            <td>56</td>
+            <td>active</td>
             <td>
               <div className={styles.buttons}>
                 <Link href={"/"}>
