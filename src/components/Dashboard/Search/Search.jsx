@@ -22,6 +22,9 @@ const Search = ({ placeholder }) => {
     // Create a new URLSearchParams object to manipulate query parameters
     const params = new URLSearchParams(searchParams);
 
+    // updating query parameter for pagination by default it will be page 1
+    params.set("page", 1);
+
     if (e.target.value) {
       // Update the 'q' parameter with the value from the input field if the search value is more than 2 characters long otherwise it might be expensive
       e.target.value.length > 2 && params.set("q", e.target.value);

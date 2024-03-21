@@ -12,9 +12,11 @@ const UsersPage = async ({ searchParams }) => {
   // #2 creating an instance of the query the ? means only when the query is available and then the query is passed into fetchUsers function
   const q = searchParams?.q || "";
 
+  // #3 instanceof the query for pagination show if particular page queri is available otherwise render first page and this instance of the query which is page is also passed into fetchUsers function.
+  const page = searchParams?.page || 1;
 
-  // #1 fetchUsers is a function in data.js file to fetch user detail from db
-  const users = await fetchUsers(q);
+  // #1 fetchUsers is a function in data.js file to fetch user detail and total number of users from db
+  const { count, users } = await fetchUsers(q, page);
 
   return (
     <div className={styles.container}>
@@ -31,7 +33,7 @@ const UsersPage = async ({ searchParams }) => {
           <tr>
             <td>Name</td>
             <td>Email</td>
-            <td>Createdat</td>
+            <td>CreatedAt</td>
             <td>Role</td>
             <td>Status</td>
             <td>Action</td>
@@ -39,7 +41,7 @@ const UsersPage = async ({ searchParams }) => {
         </thead>
         <tbody>
           {/* Using fetchUsers function mapping the results into table body in all required td and Link component  */}
-          {users.map((user) => (
+          {users && users.map((user) => (
             <tr key={user._id}>
               <td>
                 <div className={styles.user}>
@@ -75,7 +77,7 @@ const UsersPage = async ({ searchParams }) => {
         </tbody>
       </table>
       {/* Pagination Component */}
-      <Pagination />
+      <Pagination count={count} />
     </div>
   );
 };
