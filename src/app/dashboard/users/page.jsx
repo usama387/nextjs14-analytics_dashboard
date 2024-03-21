@@ -6,10 +6,16 @@ import Image from "next/image";
 import Pagination from "@/components/Dashboard/Pagination/Pagination";
 import { fetchUsers } from "@/lib/data";
 
-const UsersPage = async () => {
-  // fetchUsers is a function in data.js file to fetch user detail from db
-  const users = await fetchUsers();
-  
+// Taking my modified query from search component to search users in the users page using searchParams to get the query
+
+const UsersPage = async ({ searchParams }) => {
+  // #2 creating an instance of the query the ? means only when the query is available and then the query is passed into fetchUsers function
+  const q = searchParams?.q || "";
+
+
+  // #1 fetchUsers is a function in data.js file to fetch user detail from db
+  const users = await fetchUsers(q);
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
