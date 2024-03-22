@@ -47,7 +47,6 @@ export const addUser = async (formData) => {
 
 // This is the second server action to addProduct in the db and is being used in addProduct page form
 export const addProduct = async (formData) => {
-
   // taking all user details in one instance AS an object destructuring it from formData to add the user in the db
 
   const { title, desc, color, price, size, stock } =
@@ -75,4 +74,24 @@ export const addProduct = async (formData) => {
   // this route contains users data which is refreshed once user is created to show it on the page
   revalidatePath("/dashboard/products");
   redirect("/dashboard/products");
+};
+
+// This is the third server action to delete a Product in the db and is being used in products page in delete button wrapped with form to call this action
+export const deleteProduct = async (formData) => {
+  
+  // destructuring id from formData and then passing it to delete query to perform operations
+  const { id } = Object.fromEntries(formData);
+
+  try {
+    // first i will connect to the database
+    connectToDb();
+    
+    // deleting product while taking query
+    await Product.findByIdAndDelete(id);
+  } catch (error) {
+    throw new Error("Failed to delete the product: " + error.message);
+  }
+
+  // this route contains products data which is refreshed once product is deleted
+  revalidatePath("/dashboard/products");
 };

@@ -5,12 +5,11 @@ import Image from "next/image";
 import Pagination from "@/components/Dashboard/Pagination/Pagination";
 import styles from "./products.module.css";
 import { fetchProducts } from "@/lib/data";
+import { deleteProduct } from "@/lib/actions";
 
 // Taking my modified query from search component to search users in the users page using searchParams to get the query
 
 const ProductsPage = async ({ searchParams }) => {
-
-  
   // Extracting the 'q' parameter from searchParams, defaulting to an empty string if not present
   const q = searchParams?.q || "";
 
@@ -67,9 +66,17 @@ const ProductsPage = async ({ searchParams }) => {
                       View
                     </button>
                   </Link>
-                  <button className={`${styles.button} ${styles.delete}`}>
-                    Delete
-                  </button>
+
+                  {/* This form invokes a server action to delete product from
+                  products page */}
+                  <form action={deleteProduct}>
+                    {/* this product id is being destructured through form data in server action to delete a product */}
+                    <input type="hidden" name="id" value={product._id} />
+                    <button className={`${styles.button} ${styles.delete}`}>
+                      Delete
+                    </button>
+                  </form>
+                  
                 </div>
               </td>
             </tr>
