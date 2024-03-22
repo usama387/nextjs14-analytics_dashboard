@@ -57,8 +57,8 @@ const ProductsPage = async ({ searchParams }) => {
                 </div>
               </td>
               <td>{product.desc}</td>
-              <td>{product.price}pkr</td>
-              <td>{product.createdAt?.toString().splice(4, 16)}</td>
+              <td>{product.price}PKR</td>
+              <td>{product.createdAt?.toString().slice(4, 16)}</td>
               <td>{product.stock}</td>
               <td>
                 <div className={styles.buttons}>
