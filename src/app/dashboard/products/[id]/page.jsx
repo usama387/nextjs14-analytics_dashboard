@@ -1,34 +1,43 @@
 import React from "react";
 import styles from "./singleproduct.module.css";
 import Image from "next/image";
+import { fetchSingleProduct } from "@/lib/data";
+import { updateProduct } from "@/lib/actions";
 
-const SingleProductPage = () => {
+// params help access id which i need to update
+const SingleProductPage = async ({ params }) => {
+  // destructuring id from params
+  const { id } = params;
+
+  // now passing the id inside this function to be fetched
+  const product = await fetchSingleProduct(id);
+
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.imgContainer}>
-          <Image src="/noproduct.jpg" alt="user-image" fill />
+          <Image src={product.img || "/noproduct.jpg"} alt="user-image" fill />
         </div>
-        IPhone
+        {product.title}
       </div>
       <div className={styles.formContainer}>
-        <form className={styles.form}>
+        <form className={styles.form} action={updateProduct}>
           <label>Title</label>
-          <input type="text" name="title" placeholder="pro max" />
+          <input type="text" name="title" placeholder={product.title} />
           <label>Price</label>
-          <input type="number" name="price" placeholder="500 Pkr" />
+          <input type="number" name="price" placeholder={product.price}/>
           <label>Stock</label>
-          <input type="number" name="stock" />
+          <input type="number" name="stock" placeholder={product.stock}/>
           <label>Color</label>
-          <input type="text" name="color" placeholder="red" />
+          <input type="text" name="color" placeholder={product.color}/>
           <label>Size</label>
-          <input type="text" name="size" placeholder="red" />
+          <input type="text" name="size" placeholder={product.size}/>
           <label>Category</label>
           <select name="cat" id="cat">
             <option value="text">Tech</option>
             <option value="computers">Computers</option>
           </select>
-          <textarea type="text" id="desc" rows="10" placeholder="description" />
+          <textarea type="text" id="desc" rows="10" placeholder={product.dec} />
           <button>Update</button>
         </form>
       </div>

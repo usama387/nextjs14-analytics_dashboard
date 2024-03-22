@@ -49,3 +49,33 @@ export const fetchProducts = async (q, page) => {
     throw new Error("Error fetching products!");
   }
 };
+
+// This is the third async function where i am fetching single user for my update page
+export const fetchSingleUser = async (id) => {
+  try {
+    connectToDb();
+    
+    // passing id in the query
+    const user = await User.findById(id);
+
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching this user!");
+  }
+};
+
+// This is the fourth async function where i am fetching single product for my update page
+export const fetchSingleProduct = async (id) => {
+  try {
+    connectToDb();
+    
+    // passing id in the query
+    const product = await Product.findById(id);
+
+    return product;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching this product!");
+  }
+};

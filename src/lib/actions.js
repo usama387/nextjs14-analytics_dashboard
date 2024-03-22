@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 
 // This is the first server action to addUser in the db and is being used in addUser page form
 export const addUser = async (formData) => {
-  "use server";
+
   // taking all user details in one instance AS an object destructuring it from formData to add the user in the db
 
   const { username, email, password, phone, address, isAdmin, isActive } =
@@ -45,7 +45,44 @@ export const addUser = async (formData) => {
   redirect("/dashboard/users");
 };
 
-// This is the second server action to addProduct in the db and is being used in addProduct page form
+// This is the second server action to update user in the db and is being used in  users and then [id] folder which is a single page
+export const updateUser = async (formData) => {
+
+  // taking all user details in one instance as an object destructuring it from formData to update the user in the db this time i also need the id of the user
+  const { username, email, password, phone, address, isAdmin, isActive, id } =
+    Object.fromEntries(formData);
+
+  try {
+    // first i will connect to the database
+    connectToDb();
+
+    // the destructured data will be used to update
+    const updateFields = {
+      username,
+      email,
+      password,
+      phone,
+      address,
+      isAdmin,
+      isActive,
+    };
+
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || undefined) && delete updateFields[key]
+    );
+
+    await User.findByIdAndUpdate(id, updateFields);
+  } catch (error) {
+    throw new Error("Failed to update the user: " + error.message);
+  }
+
+  // this route contains users data which is refreshed once user is created to show it on the page
+  revalidatePath("/dashboard/users");
+  redirect("/dashboard/users");
+};
+
+// This is the third server action to addProduct in the db and is being used in addProduct page form
 export const addProduct = async (formData) => {
   // taking all user details in one instance AS an object destructuring it from formData to add the user in the db
 
@@ -76,16 +113,51 @@ export const addProduct = async (formData) => {
   redirect("/dashboard/products");
 };
 
+// This is the third server action to addProduct in the db and is being used in addProduct page form
+export const updateProduct = async (formData) => {
+  // taking all user details in one instance AS an object destructuring it from formData to add the user in the db
+
+  const { title, desc, color, price, size, stock, id } =
+    Object.fromEntries(formData);
+
+  try {
+    // first i will connect to the database
+    connectToDb();
+
+    
+    const updateFields = {
+      title,
+      desc,
+      price,
+      stock,
+      color,
+      size,
+    };
+
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || undefined) && delete updateFields[key]
+    );
+
+    await Product.findByIdAndUpdate(id, updateFields);
+  } catch (error) {
+    throw new Error("Failed to update product: " + error.message);
+  }
+
+  // this route contains users data which is refreshed once product is updated to show it on the page
+  revalidatePath("/dashboard/products");
+  redirect("/dashboard/products");
+};
+
 // This is the third server action to delete a Product in the db and is being used in products page in delete button wrapped with form to call this action
 export const deleteProduct = async (formData) => {
-  
   // destructuring id from formData and then passing it to delete query to perform operations
   const { id } = Object.fromEntries(formData);
 
   try {
     // first i will connect to the database
     connectToDb();
-    
+
     // deleting product while taking query
     await Product.findByIdAndDelete(id);
   } catch (error) {
@@ -96,17 +168,15 @@ export const deleteProduct = async (formData) => {
   revalidatePath("/dashboard/products");
 };
 
-
 // This is the fourth server action to delete a user in the db and is being used in users page in delete button wrapped with form to call this action
 export const deleteUser = async (formData) => {
-  
   // destructuring id from formData and then passing it to delete query to perform operations
   const { id } = Object.fromEntries(formData);
 
   try {
     // first i will connect to the database
     connectToDb();
-    
+
     // deleting product while taking query
     await User.findByIdAndDelete(id);
   } catch (error) {
