@@ -1,4 +1,4 @@
-import { User } from "./models";
+import { Product, User } from "./models";
 import { connectToDb } from "./utils";
 
 // #1 function that fetches users from db
@@ -18,13 +18,34 @@ export const fetchUsers = async (q, page) => {
 
     // returns the number of users
     const count = await User.find({ username: { $regex: regex } }).count();
-    
+
     const users = await User.find({ username: { $regex: regex } })
       .limit(USER_PER_PAGE)
       .skip(USER_PER_PAGE * (page - 1));
-    return  { count, users };
+    return { count, users };
   } catch (error) {
     console.log(error);
     throw new Error("Error getting users!");
+  }
+};
+
+// Second async function that fetches products from db for more comments refer to first function
+export const fetchProducts = async (q, page) => {
+  const regex = new RegExp(q, "i");
+
+  const PRODUCT_PER_PAGE = 2;
+
+  try {
+    connectToDb();
+
+    // returns the number of users
+    const count = await Product.find({ title: { $regex: regex } }).count();
+    const products = await Product.find({ title: { $regex: regex } })
+      .limit(PRODUCT_PER_PAGE)
+      .skip(PRODUCT_PER_PAGE * (page - 1));
+    return { count, products };
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error fetching products!");
   }
 };
