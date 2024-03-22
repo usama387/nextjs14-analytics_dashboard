@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Pagination from "@/components/Dashboard/Pagination/Pagination";
 import { fetchUsers } from "@/lib/data";
+import { deleteUser } from "@/lib/actions";
 
 // Taking my modified query from search component to search users in the users page using searchParams to get the query
 const UsersPage = async ({ searchParams }) => {
@@ -40,39 +41,48 @@ const UsersPage = async ({ searchParams }) => {
         </thead>
         <tbody>
           {/* Using fetchUsers function mapping the results into table body in all required td and Link component  */}
-          {users && users.map((user) => (
-            <tr key={user._id}>
-              <td>
-                <div className={styles.user}>
-                  <Image
-                    src={user.img || "/noavatar.png"}
-                    alt="user-avatar"
-                    width={40}
-                    height={40}
-                    className={styles.userAvatar}
-                  />
-                  {user.username}
-                </div>
-              </td>
-              <td>{user.email}</td>
-              <td>{user.createdAt?.toString().slice(4, 16)}</td>
-              <td>{user.isAdmin ? "admin" : "user"}</td>
-              <td>{user.isActive ? "active" : "passive"}</td>
-              <td>
-                <div className={styles.buttons}>
-                  {/* Dynamic route to navigate on single page */}
-                  <Link href={`/dashboard/users/${user.id}`}>
-                    <button className={`${styles.button} ${styles.view}`}>
-                      View
-                    </button>
-                  </Link>
-                  <button className={`${styles.button} ${styles.delete}`}>
-                    Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
+          {users &&
+            users.map((user) => (
+              <tr key={user._id}>
+                <td>
+                  <div className={styles.user}>
+                    <Image
+                      src={user.img || "/noavatar.png"}
+                      alt="user-avatar"
+                      width={40}
+                      height={40}
+                      className={styles.userAvatar}
+                    />
+                    {user.username}
+                  </div>
+                </td>
+                <td>{user.email}</td>
+                <td>{user.createdAt?.toString().slice(4, 16)}</td>
+                <td>{user.isAdmin ? "admin" : "user"}</td>
+                <td>{user.isActive ? "active" : "passive"}</td>
+                <td>
+                  <div className={styles.buttons}>
+                    {/* Dynamic route to navigate on single page */}
+                    <Link href={`/dashboard/users/${user.id}`}>
+                      <button className={`${styles.button} ${styles.view}`}>
+                        View
+                      </button>
+                    </Link>
+
+                    {/* This form invokes a server action to delete a user in the db and is coming from action.js file */}
+
+                    <form action={deleteUser}>
+                      {/* Now an input is required to get user id and then pass it to the deleteUser where it is destructed through formData to operate*/}
+
+                      <input type="hidden" name="id" value={user._id} />
+                      <button className={`${styles.button} ${styles.delete}`}>
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
       {/* Pagination Component */}

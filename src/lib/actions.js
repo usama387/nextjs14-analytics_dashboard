@@ -95,3 +95,24 @@ export const deleteProduct = async (formData) => {
   // this route contains products data which is refreshed once product is deleted
   revalidatePath("/dashboard/products");
 };
+
+
+// This is the fourth server action to delete a user in the db and is being used in users page in delete button wrapped with form to call this action
+export const deleteUser = async (formData) => {
+  
+  // destructuring id from formData and then passing it to delete query to perform operations
+  const { id } = Object.fromEntries(formData);
+
+  try {
+    // first i will connect to the database
+    connectToDb();
+    
+    // deleting product while taking query
+    await User.findByIdAndDelete(id);
+  } catch (error) {
+    throw new Error("Failed to delete the user: " + error.message);
+  }
+
+  // this route contains products data which is refreshed once product is deleted
+  revalidatePath("/dashboard/products");
+};
