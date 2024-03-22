@@ -1,10 +1,13 @@
 import React from "react";
 import styles from "./add.module.css";
 
+// addUser is a server action being used in this form to create a user user
+import { addUser } from "@/lib/actions";
+
 const AddUsersPage = () => {
   return (
     <div className={styles.container}>
-      <form action="" className={styles.form}>
+      <form action={addUser} className={styles.form}>
         <input type="text" name="username" placeholder="username" required />
         <input type="email" name="email" placeholder="email" required />
         <input
@@ -13,9 +16,9 @@ const AddUsersPage = () => {
           placeholder="password"
           required
         />
-        <input type="number" name="password" placeholder="password" />
+        <input type="number" name="phone" placeholder="phone" />
         <select name="isAdmin" id="isAdmin">
-          <option value={false} selected>IsAdmin?</option>
+          <option value={false}>IsAdmin?</option>
           <option value={true}>Yes</option>
           <option value={false}>No</option>
         </select>
