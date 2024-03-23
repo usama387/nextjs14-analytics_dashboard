@@ -1,9 +1,13 @@
-import React from 'react';
+import React from "react";
+import { UserButton } from "@clerk/nextjs";
 
 const HomePage = async () => {
   return (
-    <div>HomePage</div>
-  )
-}
+    <div>
+      <UserButton />
+      HomePage
+    </div>
+  );
+};
 
 export default HomePage;
