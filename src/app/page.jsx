@@ -1,13 +1,10 @@
 import React from "react";
-import { UserButton } from "@clerk/nextjs";
 
 const HomePage = async () => {
-  return (
-    <div>
-      <UserButton />
-      HomePage
-    </div>
-  );
+  return <div>
+    <h1>Removed Auth</h1>
+    HomePage
+    </div>;
 };
 
 export default HomePage;
